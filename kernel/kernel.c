@@ -1,22 +1,20 @@
-
-#include <stdint.h>
+#include "screen.h"
 
 void main()
 {
-    const char *str = "Hello world!";
-    uint16_t *video_memory = (uint16_t *)0xB8000;
+    clear_screen();
+    print_string("Welcome to Neonix!\n");
 
-    // color: fondo negro (0), texto blanco (15)
-    uint8_t color = (0 << 4) | (15 & 0x0F);
+    print_string("Decimal: ");
+    print_dec(12345);
+    print_char('\n');
 
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        video_memory[i] = (color << 8) | str[i];
-    }
+    print_string("Hex: ");
+    print_hex(0xB8000);
+    print_char('\n');
 
     while (1)
     {
-        // Halt the CPU to avoid spinning forever
         __asm__ __volatile__("hlt");
     }
 }
